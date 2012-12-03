@@ -1,0 +1,357 @@
+@charset "utf-8";
+
+/**
+ * CSS3でCount-up Timer　Sass+Compass版
+ *
+ * 変更点
+ * 分・時を表現する為のkeyframes
+ * ５つめのdiv
+ * 秒と分の区切りのコロン
+ * :targetをトリガーにする
+ *
+ * Original version info ----------------
+ * CSS3で秒数カウント/Count-up Timer
+ * @author Tohl SMALLFIELD
+ * @see http://jsdo.it/tsmallfield/css3_countup_timer
+ */
+
+@import "compass/css3";
+
+.timer {
+  margin: 0;
+  padding: 0 20px 40px 0;
+  background-color: #000;
+  overflow: hidden;
+
+
+  /*----- digits[sec] -----*/
+  div{
+    position: relative;
+    float: right;
+    width: 100px; height: 100px;
+    margin: 0; padding: 0;
+    @include transform(skew(-10deg) scale(.5, .45));
+  }
+
+  /*----- digits[ms] -----*/
+  div:nth-child(1){
+    width: 55px; height: 60px;
+    margin-top: 56px;
+    margin-left: 15px;
+    @include transform(skew(-10deg) scale(.30, .27));
+  }
+  div:nth-child(3){
+    margin-left: 30px;
+  }
+  /*----- decimal point -----*/
+  %decimal-point {
+    display: block;
+    @include border-radius(10px);
+    content: "";
+  }
+  div:nth-child(1):before{
+    @extend %decimal-point;
+    width: 34px; height: 31px;
+    top: 260px;
+    left: -55px;
+  }
+
+  div:nth-child(3) {
+    &:before,
+    &:after{
+      width: 30px; height: 20px;
+      @extend %decimal-point;
+      @extend %decimal-point;
+      left: -57px;
+    }
+    &:before {
+      top: 60px;
+    }
+    &:after{
+      top: 200px;
+    }
+  }
+  /*----- segments & dp -----*/
+  p, p:before, p:after,
+  div:nth-child(1):before,
+  div:nth-child(3):before,
+  div:nth-child(3):after{
+    position: absolute;
+    margin: 0; padding: 0;
+    background-color: #f09;
+  }
+
+  /*----- rectangles -----*/
+  p{
+    width: 29px; height: 100px;
+    @include animation-timing-function(linear);
+    @include animation-iteration-count(infinite);
+  }
+
+  /*----- rectangles for center segments -----*/
+  p:nth-child(4){ height: 110px; }/* HEIGHT + 10 */
+
+  /*----- triangles -----*/
+  p:before, p:after{
+    display: block;
+    width: 29px; height: 29px;
+    @include transform(rotate(45deg));
+    content: "";
+  }
+  p:before{ top:    -15px; }/* -WIDTH / 2 */
+  p:after { bottom: -15px; }/* -WIDTH / 2 */
+
+  /*----- triangles for center segments -----*/
+  p:nth-child(4):before, p:nth-child(4):after{
+    left: 4px;
+    width: 20px; height: 20px;
+  }
+  p:nth-child(4):before{ top:    -10px; }
+  p:nth-child(4):after { bottom: -10px; }
+
+  /*----- position & animation of each segments -----*/
+  p:nth-child(1){ top:   0;   left:   0;}
+  p:nth-child(2){ top: -70px; left:  70px;}
+  p:nth-child(3){ top:   0;   left: 140px;}
+  p:nth-child(4){ top:  70px; left:  70px;}
+  p:nth-child(5){ top: 150px; left:   0;  }/* top: 140 + 10 */
+  p:nth-child(6){ top: 220px; left:  70px;}/* top: 210 + 10 */
+  p:nth-child(7){ top: 150px; left: 140px;}/* top: 140 + 10 */
+
+  /*----- duration of each digits -----*/
+  div:nth-child(1) p{ @include animation-duration(1s); }//mil
+  div:nth-child(2) p{ @include animation-duration(10s); }//sec1
+  div:nth-child(3) p{ @include animation-duration(100s); }//sec2
+  div:nth-child(4) p{ @include animation-duration(590s); }//min1
+  div:nth-child(5) p{ @include animation-duration(6000s); }//min2
+
+
+  /*----- rotation of horizontal segments -----*/
+  p:nth-child(even){
+    @include transform(rotate(90deg));
+  }
+
+  /*----- border-radius of top & leftside segments -----*/
+  p:nth-child(1):before, p:nth-child(1):after,
+  p:nth-child(2):before, p:nth-child(2):after,
+  p:nth-child(5):before, p:nth-child(5):after{
+    left: -6px;/* -WIDTH * ( Math.sqrt(2) - 1 ) / 2 */
+    @include border-radius(0 0 0 99px);
+  }
+
+  /*----- border-radius of bottom & rightside segments -----*/
+  p:nth-child(3):before, p:nth-child(3):after,
+  p:nth-child(6):before, p:nth-child(6):after,
+  p:nth-child(7):before, p:nth-child(7):after{
+    right: -6px;/* -WIDTH * ( Math.sqrt(2) - 1 ) / 2 */
+    @include  border-radius(0 99px 0 0);
+  }
+
+}
+
+#game:target .timer {
+  /*----- animation of each segments -----*/
+  p:nth-child(1){ @include animation-name(p1); }
+  p:nth-child(2){ @include animation-name(p2); }
+  p:nth-child(3){ @include animation-name(p3); }
+  p:nth-child(4){ @include animation-name(p4); }
+  p:nth-child(5){ @include animation-name(p5); }/* top: 140 + 10 */
+  p:nth-child(6){ @include animation-name(p6); }/* top: 210 + 10 */
+  p:nth-child(7){ @include animation-name(p7); }/* top: 140 + 10 */
+
+  div:nth-child(3),
+  div:nth-child(5){
+    p:nth-child(1){ @include animation-name(p11); }
+    p:nth-child(2){ @include animation-name(p12); }
+    p:nth-child(3){ @include animation-name(p13); }
+    p:nth-child(4){ @include animation-name(p14); }
+    p:nth-child(5){ @include animation-name(p15); }/* top: 140 + 10 */
+    p:nth-child(6){ @include animation-name(p16); }/* top: 210 + 10 */
+    p:nth-child(7){ @include animation-name(p17); }
+  }
+}
+
+/*----- keyframes -----
+
+          p2
+
+      p1      p3
+
+          p4
+
+      p5      p7
+
+          p6
+
+----------------------*/
+@-webkit-keyframes p1 {
+  0% { opacity: 1.0; }    9.99% { opacity: 1.0; }
+  10% { opacity: 0.1; }/* 19.99% { opacity: 0.1; }
+     20% { opacity: 0.1; }   29.99% { opacity: 0.1; }
+     30% { opacity: 0.1; } */39.99% { opacity: 0.1; }
+  40% { opacity: 1.0; }/* 49.99% { opacity: 1.0; }
+     50% { opacity: 1.0; }   59.99% { opacity: 1.0; }
+     60% { opacity: 1.0; }   69.99% { opacity: 1.0; }
+     70% { opacity: 1.0; }   79.99% { opacity: 1.0; }
+     80% { opacity: 1.0; }   89.99% { opacity: 1.0; }
+     90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+  100% { opacity: 1.0; }
+} @-webkit-keyframes p2 {
+    0% { opacity: 1.0; }    9.99% { opacity: 1.0; }
+    10% { opacity: 0.1; }   19.99% { opacity: 0.1; }
+    20% { opacity: 1.0; }/* 29.99% { opacity: 1.0; }
+     30% { opacity: 1.0; } */39.99% { opacity: 1.0; }
+    40% { opacity: 0.1; }   49.99% { opacity: 0.1; }
+    50% { opacity: 1.0; }/* 59.99% { opacity: 1.0; }
+     60% { opacity: 1.0; }   69.99% { opacity: 1.0; }
+     70% { opacity: 1.0; }   79.99% { opacity: 1.0; }
+     80% { opacity: 1.0; }   89.99% { opacity: 1.0; }
+     90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+    100% { opacity: 1.0; }
+  } @-webkit-keyframes p3 {
+      0% { opacity: 1.0; }/*  9.99% { opacity: 1.0; }
+     10% { opacity: 1.0; }   19.99% { opacity: 1.0; }
+     20% { opacity: 1.0; }   29.99% { opacity: 1.0; }
+     30% { opacity: 1.0; }   39.99% { opacity: 1.0; }
+     40% { opacity: 1.0; } */49.99% { opacity: 1.0; }
+      50% { opacity: 0.1; }/* 59.99% { opacity: 0.1; }
+     60% { opacity: 0.1; } */69.99% { opacity: 0.1; }
+      70% { opacity: 1.0; }/* 79.99% { opacity: 1.0; }
+     80% { opacity: 1.0; }   89.99% { opacity: 1.0; }
+     90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+      100% { opacity: 1.0; }
+    } @-webkit-keyframes p4 {
+        0% { opacity: 0.1; }/*  9.99% { opacity: 0.1; }
+     10% { opacity: 0.1; } */19.99% { opacity: 0.1; }
+        20% { opacity: 1.0; }/* 29.99% { opacity: 1.0; }
+     30% { opacity: 1.0; }   39.99% { opacity: 1.0; }
+     40% { opacity: 1.0; }   49.99% { opacity: 1.0; }
+     50% { opacity: 1.0; }   59.99% { opacity: 1.0; }
+     60% { opacity: 1.0; } */69.99% { opacity: 1.0; }
+        70% { opacity: 0.1; }   79.99% { opacity: 0.1; }
+        80% { opacity: 1.0; }/* 89.99% { opacity: 1.0; }
+     90% { opacity: 1.0; } */99.99% { opacity: 1.0; }
+        100% { opacity: 0.1; }
+      } @-webkit-keyframes p5 {
+          0% { opacity: 1.0; }    9.99% { opacity: 1.0; }
+          10% { opacity: 0.1; }   19.99% { opacity: 0.1; }
+          20% { opacity: 1.0; }   29.99% { opacity: 1.0; }
+          30% { opacity: 0.1; }/* 39.99% { opacity: 0.1; }
+     40% { opacity: 0.1; }   49.99% { opacity: 0.1; }
+     50% { opacity: 0.1; } */59.99% { opacity: 0.1; }
+          60% { opacity: 1.0; }   69.99% { opacity: 1.0; }
+          70% { opacity: 0.1; }   79.99% { opacity: 0.1; }
+          80% { opacity: 1.0; }   89.99% { opacity: 1.0; }
+          90% { opacity: 0.1; }   99.99% { opacity: 0.1; }
+          100% { opacity: 1.0; }
+        } @-webkit-keyframes p6 {
+            0% { opacity: 1.0; }    9.99% { opacity: 1.0; }
+            10% { opacity: 0.1; }   19.99% { opacity: 0.1; }
+            20% { opacity: 1.0; }/* 29.99% { opacity: 1.0; }
+     30% { opacity: 1.0; } */39.99% { opacity: 1.0; }
+            40% { opacity: 0.1; }   49.99% { opacity: 0.1; }
+            50% { opacity: 1.0; }/* 59.99% { opacity: 1.0; }
+     60% { opacity: 1.0; } */69.99% { opacity: 1.0; }
+            70% { opacity: 0.1; }   79.99% { opacity: 0.1; }
+            80% { opacity: 1.0; }/* 89.99% { opacity: 1.0; }
+     90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+            100% { opacity: 1.0; }
+          } @-webkit-keyframes p7 {
+              0% { opacity: 1.0; }/*  9.99% { opacity: 1.0; }
+     10% { opacity: 1.0; } */19.99% { opacity: 1.0; }
+              20% { opacity: 0.1; }   29.99% { opacity: 0.1; }
+              30% { opacity: 1.0; }/* 39.99% { opacity: 1.0; }
+     40% { opacity: 1.0; }   49.99% { opacity: 1.0; }
+     50% { opacity: 1.0; }   59.99% { opacity: 1.0; }
+     60% { opacity: 1.0; }   69.99% { opacity: 1.0; }
+     70% { opacity: 1.0; }   79.99% { opacity: 1.0; }
+     80% { opacity: 1.0; }   89.99% { opacity: 1.0; }
+     90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+              100% { opacity: 1.0; }
+            }
+ //６で終了
+@-webkit-keyframes p11 {
+  0% { opacity: 1.0; }    9.99% { opacity: 1.0; }
+  10% { opacity: 0.1; }/* 19.99% { opacity: 0.1; }
+     20% { opacity: 0.1; }   29.99% { opacity: 0.1; }
+     30% { opacity: 0.1; } */39.99% { opacity: 0.1; }
+  40% { opacity: 1.0; }/* 49.99% { opacity: 1.0; }
+     50% { opacity: 1.0; }*/   59.99% { opacity: 1.0; }
+  /*60% { opacity: 0.1; }   69.99% { opacity: 1.0; }
+  70% { opacity: 0.1; }   79.99% { opacity: 1.0; }
+  80% { opacity: 1.0; }   89.99% { opacity: 1.0; }
+  90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+  100% { opacity: 1.0; }
+} @-webkit-keyframes p12 {
+    0% { opacity: 1.0; }    9.99% { opacity: 1.0; }
+    10% { opacity: 0.1; }   19.99% { opacity: 0.1; }
+    20% { opacity: 1.0; }/* 29.99% { opacity: 1.0; }
+     30% { opacity: 1.0; } */39.99% { opacity: 1.0; }
+    40% { opacity: 0.1; }   49.99% { opacity: 0.1; }
+    50% { opacity: 1.0; }/* 59.99% { opacity: 1.0; }
+     60% { opacity: 1.0; }  69.99% { opacity: 1.0; }
+     /*70% { opacity: 0.1; }  79.99% { opacity: 1.0; }
+     80% { opacity: 1.0; }   89.99% { opacity: 1.0; }
+     90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+    100% { opacity: 1.0; }
+  } @-webkit-keyframes p13 {
+        0% { opacity: 1.0; }/*  9.99% { opacity: 1.0; }
+     10% { opacity: 1.0; }   19.99% { opacity: 1.0; }
+     20% { opacity: 1.0; }   29.99% { opacity: 1.0; }
+     30% { opacity: 1.0; }   39.99% { opacity: 1.0; }
+     40% { opacity: 1.0; } */49.99% { opacity: 1.0; }
+        50% { opacity: 0.1; } 59.99% { opacity: 0.1; }
+     60% { opacity: 1.0; } /*69.99% { opacity: 0.1; }
+        70% { opacity: 1.0; } 79.99% { opacity: 1.0; }
+     80% { opacity: 1.0; }   89.99% { opacity: 1.0; }
+     90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+        100% { opacity: 1.0; }
+    } @-webkit-keyframes p14 {
+        0% { opacity: 0.1; }/*  9.99% { opacity: 0.1; }
+     10% { opacity: 0.1; } */19.99% { opacity: 0.1; }
+        20% { opacity: 1.0; }/* 29.99% { opacity: 1.0; }
+     30% { opacity: 1.0; }   39.99% { opacity: 1.0; }
+     40% { opacity: 1.0; }   49.99% { opacity: 1.0; }
+     50% { opacity: 1.0; }*/   59.99% { opacity: 1.0; }
+     60% { opacity: 0.1; }  /* 69.99% { opacity: 1.0; }
+     70% { opacity: 0.1; }     79.99% { opacity: 0.1; }
+     80% { opacity: 1.0; }/* 89.99% { opacity: 1.0; }
+     90% { opacity: 1.0; } 99.99% { opacity: 1.0; }*/
+        100% { opacity: 0.1; }
+      } @-webkit-keyframes p15 {
+          0% { opacity: 1.0; }    9.99% { opacity: 1.0; }
+          10% { opacity: 0.1; }   19.99% { opacity: 0.1; }
+          20% { opacity: 1.0; }   29.99% { opacity: 1.0; }
+          30% { opacity: 0.1; }/* 39.99% { opacity: 0.1; }
+     40% { opacity: 0.1; }   49.99% { opacity: 0.1; }
+     50% { opacity: 0.1; } */59.99% { opacity: 0.1; }
+          60% { opacity: 1.0; }   69.99% { opacity: 1.0; }
+          /*70% { opacity: 0.1; }   79.99% { opacity: 0.1; }
+          80% { opacity: 1.0; }   89.99% { opacity: 1.0; }
+          90% { opacity: 0.1; }   99.99% { opacity: 0.1; } */
+          100% { opacity: 1.0; }
+        } @-webkit-keyframes p16 {
+            0% { opacity: 1.0; }    9.99% { opacity: 1.0; }
+            10% { opacity: 0.1; }   19.99% { opacity: 0.1; }
+            20% { opacity: 1.0; }/* 29.99% { opacity: 1.0; }
+     30% { opacity: 1.0; } */       39.99% { opacity: 1.0; }
+            40% { opacity: 0.1; }   49.99% { opacity: 0.1; }
+            50% { opacity: 1.0; }/* 59.99% { opacity: 1.0; }
+     60% { opacity: 1.0; }        69.99% { opacity: 1.0; }
+           70% { opacity: 0.1; }   79.99% { opacity: 1.0; }
+           80% { opacity: 1.0; }  89.99% { opacity: 1.0; }
+           90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+            100% { opacity: 1.0; }
+          } @-webkit-keyframes p17 {
+              0% { opacity: 1.0; }/*  9.99% { opacity: 1.0; }
+     10% { opacity: 1.0; } */19.99% { opacity: 1.0; }
+              20% { opacity: 0.1; }   29.99% { opacity: 0.1; }
+              30% { opacity: 1.0; }/* 39.99% { opacity: 1.0; }
+     40% { opacity: 1.0; }   49.99% { opacity: 1.0; }
+     50% { opacity: 1.0; }   59.99% { opacity: 1.0; }
+     60% { opacity: 1.0; }   */69.99% { opacity: 1.0; }
+    /*70% { opacity: 0.1; }   79.99% { opacity: 1.0; }
+    80% { opacity: 0.1; }   89.99% { opacity: 1.0; }
+    90% { opacity: 1.0; }   99.99% { opacity: 1.0; }*/
+              100% { opacity: 1.0; }
+            }

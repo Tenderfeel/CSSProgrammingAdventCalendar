@@ -1,0 +1,67 @@
+@charset "utf-8";
+//--------------------------------------------
+// Common
+// レイアウト
+//--------------------------------------------
+
+
+html {
+  background: $base-background-color;
+}
+
+h1 {
+  height: 50px;
+  font-size: 40px;
+  line-height: 50px;
+  margin:0 0 10px 0;
+  color: #222;
+  text-shadow: 0px 2px 3px #666;
+  font-family: 'Averia Serif Libre', cursive;
+}
+
+#game {
+  position:absolute;
+  overflow:hidden;
+  top:50%;
+  left:50%;
+  margin-left:-($playground-width/2);
+  margin-top:-($playground-height/2);
+  z-index:1;
+}
+
+#main {
+  overflow:hidden;
+  position: relative;
+  cursor:pointer;
+  @include experimental(user-select, none);
+}
+
+#playground {
+  width:$playground-width;
+  height:$playground-height;
+  position:relative;
+  background: #303030;
+}
+
+footer {
+  position:fixed;
+  bottom:0;
+  left:0;
+  z-index:0;
+  width:100%;
+  text-align: center;
+  color:#000;
+
+  p {
+    font-size:80%;
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+  }
+
+  a {
+    color:#000;
+    &:hover {
+      color:#C5C5C5;
+    }
+  }
+}

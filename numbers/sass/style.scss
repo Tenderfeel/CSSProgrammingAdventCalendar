@@ -1,0 +1,20 @@
+@charset "utf-8";
+//--------------------------------------------
+// CSS Numbers
+//--------------------------------------------
+@import "compass/css3";
+
+//数字のところのサイズ
+$numbers-square-size:80px;
+
+$playground-width : $numbers-square-size * 5;
+$playground-height: $numbers-square-size * 5;
+
+$timer-height:20px;
+
+@import "../../common/sass/_import";
+
+@import "_rayout";
+@import "_covers";
+@import "_numbers";
+@import "_timer";

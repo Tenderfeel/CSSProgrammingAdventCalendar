@@ -1,0 +1,178 @@
+@charset "utf-8";
+
+//--------------------------------------------
+// CSS Numbers
+// 数字のやつ
+//--------------------------------------------
+input {
+  @include appearance(none);
+}
+
+#playground {
+
+  & > .radio {
+    display:none;
+  }
+
+  & > .cover,
+  & > .panel{
+    display:block;
+    width:$numbers-square-size;
+    height:$numbers-square-size;
+    position:absolute;
+    left:0;
+    top:0;
+  }
+
+  & > .panel {
+    background:#ACACAC;
+    font-size:30px;
+    font-family: 'Averia Serif Libre', cursive;
+    text-align: center;
+    line-height:$numbers-square-size;
+    
+    &:hover {
+      background:#bbb;
+    }
+    &:active {
+      background:#999;
+    }
+  }
+
+  .cover.number-1 {
+    display:none;
+  }
+
+}
+
+//配置
+$positions: random_table_list(5,5);
+
+#playground{
+  @for $i from 1 through length($positions) {
+    $pos: nth($positions, $i);
+    
+    & > label[for="number-#{$i}"],
+    & > .cover.number-#{$i}{
+      top: $numbers-square-size * (nth($pos, 1) - 1);
+      left: $numbers-square-size * (nth($pos, 2) - 1);
+    }
+
+
+  }
+
+}
+
+
+//カカッとJSで書きだしたけどSass function作ってやってもいいかもしれない
+#number-1:checked + .panel[for="number-1"],
+#number-1:checked ~ #number-2:checked + .panel[for="number-2"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked + .panel[for="number-3"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked + .panel[for="number-4"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked + .panel[for="number-5"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked + .panel[for="number-6"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked + .panel[for="number-7"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked + .panel[for="number-8"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked + .panel[for="number-9"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked + .panel[for="number-10"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked + .panel[for="number-11"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked + .panel[for="number-12"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked + .panel[for="number-13"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked + .panel[for="number-14"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked + .panel[for="number-15"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked + .panel[for="number-16"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked ~ #number-17:checked + .panel[for="number-17"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked ~ #number-17:checked ~ #number-18:checked + .panel[for="number-18"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked ~ #number-17:checked ~ #number-18:checked ~ #number-19:checked + .panel[for="number-19"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked ~ #number-17:checked ~ #number-18:checked ~ #number-19:checked ~ #number-20:checked + .panel[for="number-20"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked ~ #number-17:checked ~ #number-18:checked ~ #number-19:checked ~ #number-20:checked ~ #number-21:checked + .panel[for="number-21"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked ~ #number-17:checked ~ #number-18:checked ~ #number-19:checked ~ #number-20:checked ~ #number-21:checked ~ #number-22:checked + .panel[for="number-22"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked ~ #number-17:checked ~ #number-18:checked ~ #number-19:checked ~ #number-20:checked ~ #number-21:checked ~ #number-22:checked ~ #number-23:checked + .panel[for="number-23"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked ~ #number-17:checked ~ #number-18:checked ~ #number-19:checked ~ #number-20:checked ~ #number-21:checked ~ #number-22:checked ~ #number-23:checked ~ #number-24:checked + .panel[for="number-24"],
+#number-1:checked ~ #number-2:checked ~ #number-3:checked ~ #number-4:checked ~ #number-5:checked ~ #number-6:checked ~ #number-7:checked ~ #number-8:checked ~ #number-9:checked ~ #number-10:checked ~ #number-11:checked ~ #number-12:checked ~ #number-13:checked ~ #number-14:checked ~ #number-15:checked ~ #number-16:checked ~ #number-17:checked ~ #number-18:checked ~ #number-19:checked ~ #number-20:checked ~ #number-21:checked ~ #number-22:checked ~ #number-23:checked ~ #number-24:checked ~ #number-25:checked + .panel[for="number-25"] {
+  background:#666;
+}
+
+#number-1:checked ~ .cover.number-2,
+#number-2:checked ~ .cover.number-3,
+#number-3:checked ~ .cover.number-4,
+#number-4:checked ~ .cover.number-5,
+#number-5:checked ~ .cover.number-6,
+#number-6:checked ~ .cover.number-7,
+#number-7:checked ~ .cover.number-8,
+#number-8:checked ~ .cover.number-9,
+#number-9:checked ~ .cover.number-10,
+#number-10:checked ~ .cover.number-11,
+#number-11:checked ~ .cover.number-12,
+#number-12:checked ~ .cover.number-13,
+#number-13:checked ~ .cover.number-14,
+#number-14:checked ~ .cover.number-15,
+#number-15:checked ~ .cover.number-16,
+#number-16:checked ~ .cover.number-17,
+#number-17:checked ~ .cover.number-18,
+#number-18:checked ~ .cover.number-19,
+#number-19:checked ~ .cover.number-20,
+#number-20:checked ~ .cover.number-21,
+#number-21:checked ~ .cover.number-22,
+#number-22:checked ~ .cover.number-23,
+#number-23:checked ~ .cover.number-24,
+#number-24:checked ~ .cover.number-25,
+#number-25:checked ~ .cover.number-26 {
+  display:none;
+}
+
+#number-1:checked~
+#number-2:checked~
+#number-3:checked~
+#number-4:checked~
+#number-5:checked~
+#number-6:checked~
+#number-7:checked~
+#number-8:checked~
+#number-9:checked~
+#number-10:checked~
+#number-11:checked~
+#number-12:checked~
+#number-13:checked~
+#number-14:checked~
+#number-15:checked~
+#number-16:checked~
+#number-17:checked~
+#number-18:checked~
+#number-19:checked~
+#number-20:checked~
+#number-21:checked~
+#number-22:checked~
+#number-23:checked~
+#number-24:checked~
+#number-25:checked ~ #clear{
+  z-index: 3000;
+  background:rgba(0,0,0,1);
+}
+#number-1:checked~
+#number-2:checked~
+#number-3:checked~
+#number-4:checked~
+#number-5:checked~
+#number-6:checked~
+#number-7:checked~
+#number-8:checked~
+#number-9:checked~
+#number-10:checked~
+#number-11:checked~
+#number-12:checked~
+#number-13:checked~
+#number-14:checked~
+#number-15:checked~
+#number-16:checked~
+#number-17:checked~
+#number-18:checked~
+#number-19:checked~
+#number-20:checked~
+#number-21:checked~
+#number-22:checked~
+#number-23:checked~
+#number-24:checked~
+#number-25:checked ~ .timer p{
+  @include animation-play-state(paused);
+}

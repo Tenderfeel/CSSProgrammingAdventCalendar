@@ -1,0 +1,88 @@
+@charset "utf-8";
+
+//--------------------------------------------
+// Common
+// カバー要素
+//--------------------------------------------
+#clear,
+#end,
+#play {
+  top:0;
+  left:0;
+  width:$playground-width;
+  height:$playground-height;
+  position:absolute;
+  z-index:1000;
+  text-align:center;
+
+  a,
+  p {
+    width: 100%;
+    display: block;
+    position: absolute;
+    text-align: center;
+    margin:0;
+    left:0;
+    top:50%;
+  }
+  a {
+    font-size: 24px;
+    font-family: 'Averia Serif Libre', cursive;
+    text-decoration: none;
+    color: white;
+    width:200px;
+    height: 1.6em;
+    line-height: 1.6;
+    left: 50%;
+    margin-left:-100px;
+    @include border-radius(0.8em);
+    border-top: 1px solid #53e078;
+    @include background(linear-gradient(top, #20c956, #088c51));
+    @include box-shadow(rgba(0,0,0,1) 0 1px 0);
+    @include transform(translateY(100%));
+
+    &:hover {
+      border-top-color: #85e319;
+      @include background(linear-gradient(top, #59f7ad, #28a66b));
+      color: #ffffff;
+    }
+    &:active {
+      border-top-color: #05801e;
+      background: #05801e;
+    }
+  }
+
+  p {
+    font-size:24px;
+    @include transform(translateY(-100%));
+  }
+}
+
+
+#end,
+#play {
+  @include animation-timing-function(ease-out);
+  @include animation-duration(0.3s);
+  @include animation-fill-mode(both);
+}
+
+
+#play {
+  background:rgba(0,0,0, 1);
+}
+
+#end {
+  font-family: 'Nosifer', cursive;
+  color:rgb(255, 40, 100);
+}
+
+#clear {
+  @include transition-timing-function(ease-out);
+  @include transition-duration(0.3s);
+
+  p {
+    font-family: 'Averia Serif Libre', cursive;
+    color: rgb(255, 248, 137);
+    text-shadow: 0 0 10px #F5FF05;
+  }
+}

@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+
+#timer {
+  width:$playground-width;
+  height:$timer-height;
+  background: #0f0f0f;
+  overflow:hidden;
+  position:absolute;
+  bottom:0;
+  left:0;
+
+  & > b {
+    width:$playground-width - 20;
+    display:block;
+    height:$timer-height - 10;
+    margin:5px 10px;
+    background:#194BFF;
+    @include border-radius(15px);
+    @include animation-timing-function(linear);
+    @include animation-fill-mode(both);
+  }
+}
+
+#game:target #timer > b {
+  @include animation-name(ani-timer);
+  @include animation-duration($time-limit);
+}
+
+@-webkit-keyframes ani-timer{
+  0% {
+    width:$playground-width - 20;
+    background:#194BFF;
+  }
+  25% {
+    background:#14C914;
+  }
+
+  50% {
+    background:#EAE017;
+  }
+
+  75% {
+    background:#FFBA19;
+  }
+  90% {
+    background:#cf0404;
+  }
+  100% {
+    width:0px;
+    background:#cf0404;
+  }
+}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Pure CSS Touch the Numbers!</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script>
+    window.addEvent('domready', function(){
+
+        var playground = $('playground');
+        //var str =['#number-1:checked + .panel[for="number-1"]'];
+        var str =[];
+
+        for (var i = 1; i <= 25; i++) {
+
+            playground.grab(new Element('input', {
+                type: 'radio',
+                name: 'number-' + i,
+                id: 'number-' + i,
+                'class':'radio'
+            }));
+
+            playground.grab(new Element('label', {
+                'for': 'number-' + i,
+                'text': i,
+                'class':'panel'
+            }));
+            playground.grab(new Element('div', {
+                'class':'cover number-' + i
+            }));
+//           var st = str.getLast(); //末尾取り出し
+//            st = st.replace(/ \+ \.panel\[for="number\-\d+"\]/g, '');
+//           var s = st + ' ~ ' + '#number-' + (i+1) + ':checked + .panel[for="number-' + (i+1) + '"]';
+//           str.push(s);
+            //var s = '#number-' + i + ':checked ~ .cover.number-' + (i + 1) + '';
+            var s = '#number-' + i +':checked';
+            str.push(s);
+        }
+
+
+        playground.grab(new Element('div',
+        {
+            'id':'clear',
+            html:'<p>Congratulations!</p><a href="" class="replay">Replay</a>'
+        }));
+
+        playground.grab(new Element('div',
+        {
+            'class':'timer',
+            html:'<div><p><p><p><p><p><p><p></div>' +
+                    '<div><p><p><p><p><p><p><p></div>' +
+                    '<div><p><p><p><p><p><p><p></div>' +
+                    '<div><p><p><p><p><p><p><p></div>' +
+                    '<div><p><p><p><p><p><p><p></div>'
+        }));
+        playground.grab(new Element('div',
+        {
+            'id':'play',
+            html:'<a href="#game">Start</a>'
+        }));
+
+        //console.log( str.join('~\n'))
+        var radios = $$('.radio');
+        $('debug-fastClear').addEvent('click', function() {
+            radios.each(function(el){
+                    el.checked = true;
+                console.log(el.id, el.checked);
+            });
+        });
+
+        $('debug-delayClear').addEvent('click', function() {
+            var Counter = { i: 0 };
+            var check = function(){
+                if (!radios[this.i]) {
+                    return clearInterval(timer);
+                }
+                radios[this.i].checked = true;
+                this.i++;
+            };
+            var timer = check.periodical(500, Counter);
+        });
+    });
+
+    </script>
+</head>
+<body>
+<button type="button" id="debug-fastClear">Fast Clear</button>
+<button type="button" id="debug-delayClear">Delay Clear</button>
+<div id="game">
+    <h1>CSS Numbers</h1>
+    <div id="main">
+        <div id="playground">
+
+        </div>
+    </div>
+</div>
+<footer>
+    <p>Special thanks to <a href="https://twitter.com/GeckoTang">@GeckoTang</a>
+        and
+        <a href="https://twitter.com/tsmallfield">@tsmallfield.</a><br>
+        Powerd by Sass and Compass.</p>
+    <p>&copy; 2012 <a href="https://twitter.com/Tenderfeel">Tenderfeel.</a></p>
+</footer>
+</body>
+</html>

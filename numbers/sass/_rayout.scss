@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+//--------------------------------------------
+// CSS Numbers
+// レイアウト
+//--------------------------------------------
+
+h1 {
+  position: absolute;
+}
+
+#game {
+  margin-top:-(($playground-height/2) + 35);
+}
+
+#main {
+  padding-top: 61px;
+}
+
+#game .timer {
+  position: absolute;
+  @include transform(scale(0.2));
+  top: -120px;
+  right: -218px;
+  padding: 10px 30px 50px 10px;
+  border-radius: 30px;
+  border: solid 3px #333;
+}

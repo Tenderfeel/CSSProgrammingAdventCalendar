@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CSS神経衰弱</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/mootools/1.4.5/mootools-yui-compressed.js"></script>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script>
+        window.addEvent('domready', function(){
+            var max = 24;
+            var group = 1;
+            var playground = $('playground');
+            var well;
+            var score = $('score');
+            var scoreText = $('score-text');
+
+            for (var i = 1; i <= max; i++ ) {
+
+                //if ((i % 2)) {
+                //    if (i != 1) {
+                //        group++;
+                //    }
+                //}
+
+                playground.grab(new Element('input', {
+                    id :'card-' + i,
+                    type:'checkbox',
+                    'class':'card'
+                }));
+
+                playground.grab(new Element('label', {
+                    for :'card-' + i,
+                    'class':'card-label'
+                }));
+
+            }
+
+            for (var i = 1; i <= max; i++ ) {
+                //if (i % 2 === 0) {
+                playground.grab(new Element('div',
+                        {
+                            'class':'ex',
+                            'data-id':'card-' + i
+                        }));
+                //}
+                // playground.grab(well);
+            }
+
+            playground.grab(new Element('div',
+                    {
+                        'id':'clear',
+                        html:'<p>Congratulations!</p><a href="" class="replay">Replay</a>'
+                    }));
+
+            playground.grab(new Element('div',
+                    {
+                        'id':'timer',
+                        html:'<b></b>'
+                    }));
+
+        });
+    </script>
+</head>
+<body>
+<div id="game">
+    <header><h1>CSS Pelmanism</h1></header>
+    <div id="main">
+        <div id="playground"></div>
+        <div id="end"><p>Game Over</p><a href="" class="replay">Replay</a></div>
+        <div id="play"><a href="#game">Start</a></div>
+    </div>
+</div>
+<footer>
+    <p>Special thanks to <a href="https://twitter.com/GeckoTang">@GeckoTang</a> and <a href="http://blog.selfthinker.org/2010/08/23/css-playing-cards/">selfthinker</a>.<br>
+        Powerd by Sass and Compass.</p>
+    <p>&copy; 2012 <a href="https://twitter.com/Tenderfeel">Tenderfeel.</a></p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,105 @@
+@charset "utf-8";
+@import "compass";
+
+//再生時間
+$default-animation-duration       : 0.5s !default;
+
+//実行までの待ち時間
+$default-animation-delay          : 0    !default;
+
+//実行回数(number | infinite)
+$default-animation-iteration-count: 1    !default;
+
+//タイミング(ease | liner | ease-in | ease-out | ease-in-out | cubic-bezier)
+$default-animation-timing-function: ease !default;
+
+//反復の有無(normal | alternate)
+$default-animation-direction: normal     !default;
+
+//実行前や実行後のスタイル指定(none | forwards | backwards | both)
+$default-animation-fill-mode: both       !default;
+
+@mixin animation(
+$name     :none,
+$duration :$default-animation-duration,
+$function :$default-animation-timing-function,
+$delay    :$default-animation-delay,
+$count    :$default-animation-iteration-count,
+$direction:$default-animation-direction,
+$fillMode :$default-animation-fill-mode
+){
+  @include experimental(animation, $name $duration $function $delay $count $direction);
+  @if $fillMode {
+    @include animation-fill-mode($fillMode);
+  }
+}
+
+@mixin animation-name($name: null) {
+  @include experimental(animation-name, $name);
+}
+
+@mixin animation-duration($duration:$default-animation-duration) {
+  @include experimental(animation-duration, $duration);
+}
+
+@mixin animation-timing-function($function: $default-animation-timing-function) {
+  @include experimental(animation-timing-function, $function);
+}
+
+@mixin animation-iteration-count($count: $default-animation-iteration-count) {
+  @include experimental(animation-iteration-count, $count);
+}
+
+@mixin animation-delay($delay) {
+  @include experimental(animation-delay, $delay);
+}
+
+@mixin animation-fill-mode($fillMode) {
+  @include experimental(animation-fill-mode, $fillMode);
+}
+
+//running|paused
+@mixin animation-play-state($state){
+ @include experimental(animation-play-state, $state);
+}
+
+@mixin keyframes($name) {
+
+  @-webkit-keyframes $name {
+    @content;
+  }
+  @-moz-keyframes $name {
+    @content;
+  }
+}
+
+@mixin data-background($image...){
+  $length:length($image);
+  @if ($length > 1) {
+  $images:null;
+  $sizes:null;
+
+  @for $i from 1 through $length {
+    $images:append($images, inline-image(nth($image, $i)), "comma");
+    $sizes:append($sizes, image-size(nth($image, $i)), "comma");
+  }
+  background-image:$images;
+  @include background-size($sizes);
+
+} @else {
+  $image:nth($image, 1);
+  background-image:inline-image($image);
+  @include background-size(image-size($image));
+}
+  };
+
+//$s = scale
+@function image-size($image, $s:2) {
+  $width : image-width($image);
+  $height: image-height($image);
+  @if $s > 1 {
+    $width:$width/$s;
+    $height:$height/$s;
+  }
+  @return $width $height;
+}

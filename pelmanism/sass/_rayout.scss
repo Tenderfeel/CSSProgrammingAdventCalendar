@@ -1,0 +1,18 @@
+@charset "utf-8";
+//--------------------------------------------
+// CSS Pelmanism
+// レイアウト
+//--------------------------------------------
+
+h1 {
+  text-align: center;
+}
+
+#game {
+  margin-top:-(($playground-height/2) + 60);
+}
+
+#playground {
+  overflow:hidden;
+}
+

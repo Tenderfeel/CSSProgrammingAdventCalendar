@@ -1,0 +1,311 @@
+@charset "utf-8";
+//--------------------------------------------
+// CSS Pelmanism
+// カード
+//--------------------------------------------
+//カードのベース
+%card-base {
+  border:solid 1px black;
+  background:#F8F8F3;
+  border-radius:8px;
+
+  &:before {
+    display: block;
+    margin: 5px 0 0 5px;
+    font-size: $card-font-size;
+    line-height: $card-font-size;
+  }
+
+  &:after{
+    display:block;
+    font-size: $mark-font-size;
+    font-weight: normal;
+    font-family: Arial, sans-serif;
+    display: block;
+    text-align: center;
+    white-space: pre;
+    line-height: 1;
+    word-spacing: -0.2em;
+  }
+}
+
+@-webkit-keyframes ani-card {
+  0% {
+    @include rotateY(0deg);
+  }
+  10% {
+    @include rotateY(180deg);
+  }
+
+  90% {
+    @include rotateY(180deg);
+  }
+  100% {
+    @include rotateY(0deg);
+  }
+}
+
+@-webkit-keyframes ani-label {
+  0% {
+    @include rotateY(180deg);
+  }
+  10% {
+    @include rotateY(0deg);
+  }
+
+  90% {
+    @include rotateY(0deg);
+  }
+  100% {
+    @include rotateY(180deg);
+  }
+}
+
+@-webkit-keyframes ani-win {
+  0% {
+    @include scale(0);
+  }
+
+  100% {
+    @include scale(1);
+  }
+}
+
+%card-label-anim {
+  @include rotateY(0deg);
+}
+
+%ani-open {
+  @include rotateY(0deg);
+  z-index:$card-total * 5;
+}
+
+%ani-win {
+  @include animation-name(ani-win);
+  z-index:$card-total * 6;
+}
+
+//１から１０までの絵柄
+// http://blog.selfthinker.org/wp-content/uploads/2010/08/cards/examples.html#
+@mixin card-rabel($name:'hearts', $mark:"\002665", $color:red) {
+  $card-label-contents:
+    //1
+    "#{$mark}",
+    //2
+    "#{$mark} \A\A#{$mark}",
+    //3
+    "#{$mark} \A#{$mark} \A#{$mark}",
+    //4
+    "#{$mark}\00A0\00A0\00A0#{$mark} \A\A#{$mark}\00A0\00A0\00A0#{$mark}",
+    //5
+    "#{$mark}\00A0\00A0\00A0#{$mark} \A#{$mark} \A#{$mark}\00A0\00A0\00A0#{$mark}",
+    //6
+    "#{$mark}\00A0\00A0\00A0#{$mark} \A#{$mark}\00A0\00A0\00A0#{$mark} \A#{$mark}\00A0\00A0\00A0#{$mark}",
+    //7
+    "#{$mark}\00A0\00A0#{$mark} \A#{$mark}\00A0#{$mark}\00A0#{$mark} \A#{$mark}\00A0\00A0#{$mark}",
+    //8
+    "#{$mark}\00A0#{$mark}\00A0#{$mark} \A#{$mark}\00A0\00A0#{$mark} \A#{$mark}\00A0#{$mark}\00A0#{$mark}",
+    //9
+    "#{$mark}\00A0#{$mark}\00A0#{$mark} \A#{$mark}\00A0#{$mark}\00A0#{$mark} \A#{$mark}\00A0#{$mark}\00A0#{$mark}",
+    //10
+    "#{$mark}\00A0#{$mark}\00A0#{$mark} \A#{$mark}\00A0#{$mark}\00A0#{$mark}\00A0#{$mark} \A#{$mark}\00A0#{$mark}\00A0#{$mark}";
+
+  @for $i from 1 through length($card-label-contents) {
+
+    %#{$name}-#{$i} {
+      &:before {
+        content:"#{$i}";
+        color:$color;
+      }
+      &:after {
+        content: nth($card-label-contents, $i);
+        color:$color;
+        @if $i == 1  {
+          font-size: $mark-font-size * 2.5;
+        }
+      }
+    }
+
+  }
+}
+
+//hearts
+@include card-rabel;
+//diamonds
+@include card-rabel('diamonds', "\002666", blue);
+//spades
+@include card-rabel('spades', "\002660", black);
+//clubs
+@include card-rabel('clubs', "\002663", green);
+
+.card,
+.card-label,
+.ex {
+  display:block;
+  border-radius:8px;
+  left:0;
+  margin:0;
+  position:absolute;
+  width:$card-width;
+  height:$card-height;
+  @include box-sizing(border-box);
+}
+
+.card,
+.card-label {
+  @include transform-style(preserve-3d);
+  @include transition-property(transform);
+  @include transition-timing-function(ease-out);
+  cursor:pointer;
+}
+
+.ex {
+  @include animation-timing-function(ease-in-out);
+  @include animation-duration(0.3s);
+  @include animation-delay(0.3s);
+  @include transform-origin(50% 50%);
+  @include animation-fill-mode(forwards);
+}
+
+//カードの裏と表
+.card,
+.card-label {
+  border:solid 1px black;
+  @include backface-visibility(hidden);
+  @include transition-duration(0.3s);
+}
+
+//カードの裏
+.card {
+  -webkit-appearance:none;
+  background-position:center;
+  @include rotateY(0deg);
+  @include background(
+      linear-gradient(-45deg, rgba(255,255,255,0.2) 0%,
+      rgba(255,255,255,0.2) 20%, rgba(255,255,255,0) 21%,
+      rgba(255,255,255,0.2) 40%, rgba(255,255,255,0) 41%,
+      rgba(255,255,255,0) 60%, rgba(255,255,255,0.2) 61%,
+      rgba(255,255,255,0.2) 80%, rgba(255,255,255,0) 81%,
+      rgba(255,255,255,0) 100%),
+      linear-gradient(left, hsl(298,35%,42%) 0%,hsl(295,40%,28%) 100%)
+  );
+  @include background-size(8px 8px, auto);
+}
+
+//カードの表
+.card-label {
+  @include rotateY(180deg);
+  background:#F8F8F3;
+  @extend %card-base;
+}
+
+//カードのカバー
+
+.ex {
+  background:#3a3a3a;
+  border:solid 1px #3a3a3a;
+  @include scale(0);
+  z-index:0;
+}
+
+//カードが選択された時
+.card:checked {
+  border:solid 1px #AD00FF;
+  //@include animation-name(ani-card);
+  @include rotateY(180deg);
+}
+
+
+//Card position set
+$positions:random_table_list(3,8);
+
+@for $i from 1 through  length($positions) {
+  
+  $pos: nth($positions, $i);
+  
+  .card[id="card-#{$i}"],
+  .card-label[for="card-#{$i}"],
+  .ex[data-id="card-#{$i}"]{
+    top:($card-height * nth($pos, 1)) - $card-height + ($card-space * nth($pos, 1));
+    left:($card-width * nth($pos, 2)) - $card-width + ($card-space * nth($pos, 2));
+  }
+}
+
+//カードオープン
+@for $i from 1 through $card-total {
+  .card[id="card-#{$i}"]:checked + .card-label[for="card-#{$i}"] {
+    @extend %ani-open;
+  }
+}
+
+.card {
+  z-index:2;
+  &:checked {
+    z-index:1;
+  }
+}
+
+.card-label {
+  z-index:1;
+}
+
+//hearts, diamonds, spades, clubs
+$card-labels:
+  hearts-5,
+  clubs-9,
+  diamonds-3,
+  hearts-10,
+  spades-2,
+  diamonds-2,
+  clubs-3,
+  hearts-3,
+  spades-5,
+  diamonds-10,
+  clubs-1,
+  spades-9;
+
+$id:1;
+$i:1;
+
+@while $id < $card-total {
+
+//カードラベル
+  .card-label[for="card-#{$id}"], .card-label[for="card-#{$id+1}"] {
+    @extend %#{nth($card-labels, $i)};
+  }
+
+//正解が選ばれた時に.exでカードを隠す
+  #card-#{$id}:checked ~ #card-#{$id+1}:checked ~ .ex[data-id="card-#{$id}"],
+  #card-#{$id}:checked ~ #card-#{$id+1}:checked ~ .ex[data-id="card-#{$id + 1}"]{
+    @extend %ani-win;
+  }
+  $id: $id + 2;
+  $i: $i + 1;
+}
+
+#card-1:checked ~
+#card-2:checked ~
+#card-3:checked ~
+#card-4:checked ~
+#card-5:checked ~
+#card-6:checked ~
+#card-7:checked ~
+#card-8:checked ~
+#card-9:checked ~
+#card-10:checked ~
+#card-11:checked ~
+#card-12:checked ~
+#card-13:checked ~
+#card-14:checked ~
+#card-15:checked ~
+#card-16:checked ~
+#card-17:checked ~
+#card-18:checked ~
+#card-19:checked ~
+#card-20:checked ~
+#card-21:checked ~
+#card-22:checked ~
+#card-23:checked ~
+#card-24:checked ~ #clear{
+  @include transform(translateY(0));
+}

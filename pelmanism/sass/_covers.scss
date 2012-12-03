@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+//--------------------------------------------
+// CSS Pelmanism
+// カバー要素
+//--------------------------------------------
+
+#clear,
+#end,
+#play {
+
+  &:after {
+    display:block;
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:$playground-width;
+    background:#000;
+    height:$timer-height;
+    content:"";
+  }
+}
+
+#clear,
+#end {
+  background:rgba(0,0,0,1);
+  @include transform(translateY(-100%));
+}
+
+
+#play {
+  background:rgba(0,0,0, 0.5);
+}
+
+#clear {
+  @include transition-delay(1s);
+  @include transition-property(transform);
+  z-index: 3000;
+}
+
+#game:target #play {
+  @include animation-name(ani-slide-up);
+  @include animation-delay(0.3s);
+}
+
+#game:target #end {
+  @include animation-name(ani-slide-down);
+  @include animation-delay($time-limit);
+}

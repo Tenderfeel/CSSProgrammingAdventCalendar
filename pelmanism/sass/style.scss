@@ -1,0 +1,67 @@
+@charset "utf-8";
+//--------------------------------------------
+// Css Pelmanism
+//--------------------------------------------
+
+@import "compass/css3";
+
+//サイズ変え
+$stage-size:'small';
+
+//カードの横幅
+$card-width:50px;
+
+@if $stage-size == 'large' {
+  $card-width:80px;
+}
+
+//カードの高さ
+$card-height:80px;
+
+@if $stage-size == 'large' {
+  $card-height:120px;
+}
+
+//カードの文字サイズ
+$card-font-size:14px;
+
+@if $stage-size == 'large' {
+  $card-font-size:24px;
+}
+
+//マークの文字サイズ
+$mark-font-size:16px;
+
+@if $stage-size == 'large' {
+  $mark-font-size:26px;
+}
+
+//カードとカードの隙間
+$card-space:5px;
+
+//カードの総数
+$card-total:24;
+
+//横に並べる枚数
+$card-cols:8;
+
+//縦に並べる枚数
+$card-rows:3;
+
+//タイマーの高さ
+$timer-height:20px;
+
+//制限時間
+$time-limit:180s;
+
+$playground-width:($card-width * $card-cols) + ($card-space * ($card-cols + 1));
+$playground-height:($card-height * $card-rows) + ($card-space * ($card-rows + 1)) + $timer-height;
+
+//common
+@import "../../common/sass/_import";
+
+//
+@import "_rayout";
+@import "_timer";
+@import "_covers";
+@import "_card";

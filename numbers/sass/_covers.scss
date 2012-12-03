@@ -1,0 +1,17 @@
+@charset "utf-8";
+//--------------------------------------------
+// CSS Numbers
+// カバー要素
+//--------------------------------------------
+
+#clear {
+  background:rgba(#666,0);
+  z-index:-1;
+  @include transition-property(background);
+
+}
+
+#game:target #play {
+  @include animation-name(ani-pop-out);
+  @include animation-delay(0.2s);
+}
